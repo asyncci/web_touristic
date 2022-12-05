@@ -19,6 +19,7 @@ class Account(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100,primary_key=True)
     verified = models.BooleanField(default=False)
+    verif_date = models.DateField('Verification Date',null=True)
 
     def __str__(self):
         return self.email
@@ -26,3 +27,15 @@ class Account(models.Model):
 class VerifToken(models.Model):
     email = models.CharField(max_length=25, primary_key=True)
     token = models.IntegerField(default=0,null=True)
+
+    def __str__(self) -> str:
+        return self.email
+
+class Comment(models.Model):
+    tour = models.ForeignKey(Tour,on_delete=models.CASCADE)
+    account = models.ForeignKey(Account,on_delete=models.CASCADE)
+    comment = models.TextField(max_length=100,null=False)
+
+    def __str__(self) -> str:
+        return self.tour.__str__ + ' - ' + self.account.__str__
+    
