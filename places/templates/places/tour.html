@@ -1,0 +1,23 @@
+{% load static %}
+{% csrf_token %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour {{object.title}}</title>
+    <link rel="stylesheet" href="{% static 'places/cascading/tour.css' %}">
+</head>
+<body>
+    <center>
+        <div>{{object.title}}</div>
+        <div>
+            {% for image in images %}
+                <img src="{{image.picture.url}}" alt="">
+            {% endfor %}
+        </div>
+    </center>
+</body>
+</html>

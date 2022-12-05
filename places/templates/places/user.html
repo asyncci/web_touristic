@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        {% if success %}
+            <h1>Code send to your email</h1>
+            <form action="{% url 'places:verify' %}" method='post'>
+                {% csrf_token %}
+                <h3>{{form.data.email}}</h3>
+                <label for="token">Code:</label>
+                <input type="text" name="token">
+                <input type="hidden" name="email" value = {{form.data.email}}>
+                <button type="sumbit" >Submit</button>
+            </form>
+        {% else %}
+
+            {% if success == False %}
+                <h1>Something wrong</h1>
+            {% elif success == None%}
+                <h1>Ok let's register</h1> 
+            {% endif %}
+             
+            <form action="{% url 'places:login' %}" method='post'>
+                {% csrf_token %}    
+                {{form.as_p}}
+                
+                <button type="sumbit" >Submit</button>
+            </form>
+           
+        {% endif %}
+
+
+    </center>
+</body>
+</html>

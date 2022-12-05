@@ -1,7 +1,6 @@
 {% load static %}
 {% csrf_token %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,11 +12,12 @@
 </head>
 <body>
     <div class="cards">
-        {% for places in object_list %}
-            <div class="card" id="card_{{places.id}}">
-                <img src="{{places.image.url}}" alt=""> 
+        {% for place in object_list %}
+            <div class="card" id="card_{{place.id}}">    
+                <img src="{{place.main_image.url}}" alt="">
                 <div class="container">
-                    <h4>{{places.title}}</h4>
+                    <h4>{{place.title}}</h4>
+                    <a href="{% url 'places:tour' pk=place.id %}">More</a>
                 </div>
             </div>
         {% endfor %}
