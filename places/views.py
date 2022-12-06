@@ -21,6 +21,8 @@ class Place(DetailView):
         context = super().get_context_data(**kwargs)
         obj = super().get_object()
         context['images'] = models.Image.objects.filter(tour=obj.pk)
+        context['form'] = forms.Comment()
+        context['comments'] = models.Comment.objects.filter(tour=obj.pk)
         return context
 
 @csrf_protect
@@ -51,18 +53,15 @@ def verify(request):
 @csrf_protect
 def leave_comment(request,pk):
     (ip,_) = get_client_ip(request)    
-    verified = verificator.check_verification(ip)
+    if request.method == 'POST':
+        form = forms.Comment(request.POST)
+        if form.is_valid():
+            comment = form.cleaned_data['comment']
+            tour = models.Tour.objects.get(pk=pk)
+            author = models.Account.objects.get(ip=ip)
+            models.Comment.objects.create(tour=tour,author=author,comment=comment)
 
-    #if verified
-    if verified:
-        tour = models.Tour.objects.get(pk=pk)
-        account = models.Account.objects.get(ip=ip)
-        cmt = request.POST.get('comment')
-        models.Comment.objects.create(tour=tour,account=account,comment=cmt)
-    #if not 
-
-
-    return HttpResponseRedirect(reverse('places:tour',{'pk':pk}))
+    return HttpResponseRedirect(reverse('places:tour',kwargs={'pk':pk}))
 
 def only_test(request):
     (ip,_) = get_client_ip(request)

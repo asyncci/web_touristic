@@ -19,13 +19,19 @@
             {% endfor %}
         </div>
         <h2>leave a comment:</h2>
-        <form action="{% url 'places:new_comment' pk=object.pk%}">
+        <form action="{% url 'places:new_comment' pk=object.pk%}" method="POST">
             {% csrf_token %}
-            <div>
-                <textarea name="comment" cols="30" rows="10" style="resize:none;"></textarea>
-            </div>
+            {{form.as_p}}
             <input type="submit" value="Submit" style="width:120px; height:50px;">
         </form>
+
+        <h4>Comments:</h1>
+        <ol>
+            {% for comment in comments %}
+                <h4><li>{{comment.comment}}</li></h4>
+                <h5>Author:{{comment.author}}</h5><br>
+            {% endfor %}
+        </ol>
     </center>
 </body>
 </html>

@@ -33,9 +33,7 @@ class VerifToken(models.Model):
 
 class Comment(models.Model):
     tour = models.ForeignKey(Tour,on_delete=models.CASCADE)
-    account = models.ForeignKey(Account,on_delete=models.CASCADE)
+    author = models.ForeignKey(Account,on_delete=models.CASCADE)
     comment = models.TextField(max_length=100,null=False)
 
-    def __str__(self) -> str:
-        return self.tour.__str__ + ' - ' + self.account.__str__
     
