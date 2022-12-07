@@ -53,13 +53,18 @@ def verify(request):
 @csrf_protect
 def leave_comment(request,pk):
     (ip,_) = get_client_ip(request)    
-    if request.method == 'POST':
-        form = forms.Comment(request.POST)
-        if form.is_valid():
-            comment = form.cleaned_data['comment']
-            tour = models.Tour.objects.get(pk=pk)
-            author = models.Account.objects.get(ip=ip)
-            models.Comment.objects.create(tour=tour,author=author,comment=comment)
+    author = models.Account.objects.get(ip=ip)
+
+    if author.verified == False:
+        
+        pass
+    else:
+        if request.method == 'POST':
+            form = forms.Comment(request.POST)
+            if form.is_valid():
+                comment = form.cleaned_data['comment']
+                tour = models.Tour.objects.get(pk=pk)
+                models.Comment.objects.create(tour=tour,author=author,comment=comment)
 
     return HttpResponseRedirect(reverse('places:tour',kwargs={'pk':pk}))
 
