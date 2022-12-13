@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <a href="{% url 'nobele:main' %}">Main page</a>
+    <center>
+        <h1>Country:</h1>
+        {{object.name}}
+
+        <h4>cities</h4>
+        <ol>
+            {% for city in cities %}
+                <li>
+                    <a href="{% url 'nobele:city' id=object.pk pk=city.pk %}">{{city.name}}</a>
+                </li>    
+            {% endfor %}
+        </ol>
+        <br>
+        <h4>comments</h4>
+        <ul>
+            {% for comment in comments %}
+                <p>{{comment.author.name}} {{comment.author.surname}} - {{comment.text}} </p>
+            {% endfor %}
+        </ul><br>
+
+        {% if authorized == True %}
+            <h4>Live a Comment</h4>
+            <form action="{% url 'nobele:new_comment' pk=object.pk %}" method="POST">
+                {% csrf_token %}
+                {{comment_form.as_p}}
+                <input type="submit" name="submit" value="Submit">
+            </form>
+        {% endif %}
+
+    </center>
+</body>
+</html>

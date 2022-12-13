@@ -20,6 +20,7 @@ class Account(models.Model):
     email = models.EmailField(max_length=100,primary_key=True)
     verified = models.BooleanField(default=False)
     verif_date = models.DateField('Verification Date',null=True)
+    active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.email
@@ -36,4 +37,3 @@ class Comment(models.Model):
     author = models.ForeignKey(Account,on_delete=models.CASCADE)
     comment = models.TextField(max_length=100,null=False)
 
-    

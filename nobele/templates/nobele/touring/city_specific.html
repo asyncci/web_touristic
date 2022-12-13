@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{object.name}}</title>
+</head>
+<body>
+    <ul>
+        {% for hotel in hotels %}
+            <li>
+                <p>
+                    <h1>{{hotel.name}}</h1>
+                    <h4>Rating: {{hotel.stars}} </h4>
+                    <form action="{% url 'nobele:rate' pk=hotel.pk%}" method="POST">
+                        {% csrf_token %}
+                        {{rate_form.as_p}}
+                        <input type="submit" name="submit" value="Submit">
+                    </form>
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

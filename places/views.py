@@ -52,12 +52,11 @@ def verify(request):
 
 @csrf_protect
 def leave_comment(request,pk):
-    (ip,_) = get_client_ip(request)    
-    author = models.Account.objects.get(ip=ip)
+    (ip,_) = get_client_ip(request)
+    author = models.Account.objects.filter(ip=ip).get(active=True)
 
     if author.verified == False:
-        
-        pass
+        return HttpResponseRedirect(reverse('places:login'))
     else:
         if request.method == 'POST':
             form = forms.Comment(request.POST)

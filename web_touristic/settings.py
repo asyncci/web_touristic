@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'nobele',
     'places',
     'django.contrib.admin',
     'django.contrib.auth',

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        {% if authorized %}
+            <a href="{% url 'nobele:user' %}">User</a>
+
+            {% if not verified %}
+                <a href="{% url 'nobele:verificate' %}">Verificate</a><br>
+            {% endif %}
+
+        {% else %}
+            <a href="{% url 'nobele:login' %}">Login</a><br>
+            <a href="{% url 'nobele:register' %}">Register</a><br>
+        {% endif %}
+    </center>
+
+    <center>
+        <ul>
+            {% for country in countries %}
+                <li>
+                    <a href="{% url 'nobele:country' pk=country.pk %}">
+                        {{country.name}}
+                    </a>         
+                </li>
+            {% endfor %}
+        </ul>
+    </center>
+
+</body>
+</html>
